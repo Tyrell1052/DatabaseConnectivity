@@ -1,3 +1,15 @@
+/*
+* Author: Tyrell Robbins
+* Course: CSCI 112
+* Program: DatabaseConnectivity
+*
+* */
+
+import javax.swing.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.sql.*;
 
 public class Main {
@@ -16,19 +28,61 @@ public class Main {
 
         showColumns(st);
 
-        System.out.println("**************************");
-
-        selectAll(st);
+        //writeToCSV(st);
 
 
+
+        //System.out.println("**************************");
+
+//        selectAll(st);
 
 
         // Close the connection
         conn.close();
 
+//        String filePath = "Courses.csv";
+
+//        String crn = "12432";
+//        String subject = "computer programming";
+
+//        writeToCSV(st);
+
 
 
     }//end main() method
+
+
+    public static void writeToCSV(Statement s){
+        String filePath = "Courses.csv";
+
+        try {
+
+//            // Creating a File Object and creating the filepath
+//            java.io.File x = new java.io.File("Courses.cvs");
+//
+//            // Creating a PrintWriter output stream & linking it to the X object
+//            java.io.PrintWriter y = new java.io.PrintWriter(x);
+
+            FileWriter fw = new FileWriter(filePath,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            pw.println();
+            pw.flush();
+            pw.close();
+
+            JOptionPane.showMessageDialog(null,"Saved to CVS");
+
+        }//end try
+        catch (Exception E){
+
+            JOptionPane.showMessageDialog(null,"Failed to save to CSV");
+
+        }//end catch
+
+
+    }//end writeToCSV
+
 
     public static void showColumns(Statement s)
             throws SQLException, ClassNotFoundException {
@@ -38,16 +92,16 @@ public class Main {
 
         // Create an SQL query as as String for this statement
         // this query returns all rows and all columns from the database
-        queryString = "Describe pet;";
+        queryString = "Describe fall2014;";
 
         // Send a statement executing the query and saving the result set
         rs = s.executeQuery(queryString);
 
         // print headings for the output
 
-        System.out.println("Columns in the pet table:");
+        System.out.println("Columns in the Course table:");
 
-        System.out.printf("%-10s%-10s%n", "Column", "Datatype");
+        System.out.printf("%-10s%-10s%n", "CRN", "Course");
         System.out.println("*********************");
 
         // Iterate the result set and print name, owner, and species attributes
