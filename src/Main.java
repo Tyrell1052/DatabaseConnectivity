@@ -36,11 +36,6 @@ public class Main {
         // Close the connection
         conn.close();
 
-//        String filePath = "Courses.csv";
-
-//        String crn = "12432";
-//        String subject = "computer programming";
-
 
     }//end main() method
 
@@ -50,19 +45,41 @@ public class Main {
 
         try {
 
-//            // Creating a File Object and creating the filepath
-//            java.io.File x = new java.io.File("Courses.cvs");
-//
-//            // Creating a PrintWriter output stream & linking it to the X object
-//            java.io.PrintWriter y = new java.io.PrintWriter(x);
-
             FileWriter fw = new FileWriter(filePath,true);
             BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter pw = new PrintWriter(bw);
+            PrintWriter outFile = new PrintWriter(filePath);
 
-            pw.println();
-            pw.flush();
-            pw.close();
+            String queryString;     // a String to hold an SQL query
+            ResultSet rs;           // the result set from an SQL query as a table
+
+            // Create an SQL query as as String for this statement
+            // this query returns all rows and all columns from the database
+            queryString = "SELECT * FROM fall2014;";
+
+
+            // Send a statement executing the query and saving the result set
+            rs = s.executeQuery(queryString);
+
+
+            outFile.print("Requested Data from: ");
+            // print headings for the output
+            outFile.println(queryString);
+            outFile.printf("%-10s%-10s%-10s%-10s%-10s%-20s%-20s\n", "CRN","Subject", "Course","Section","Credits","Days","Time");
+            outFile.println("*****************************************************************************");
+
+            // Iterate through the result set and print name, owner, and species attributes
+            while (rs.next()) {
+                outFile.printf("%-10s%-10s%-10s%-10s%-10s%-20s%-20s\n", rs.getString(1), rs.getString(2), rs.getString(3),
+
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+            }
+
+            outFile.println("*****************************************************************************");
+
+
+            outFile.println();
+            outFile.flush();
+            outFile.close();
 
             JOptionPane.showMessageDialog(null,"Saved to CVS");
 
@@ -134,6 +151,5 @@ public class Main {
         System.out.println("*****************************************************************************");
 
     } // end selectAll()
-
 
 }//end Main Class
