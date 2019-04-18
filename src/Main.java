@@ -26,15 +26,11 @@ public class Main {
         // Create a statement Object for this  database connection
         Statement st = conn.createStatement();
 
-        showColumns(st);
+        //showColumns(st);
 
-        //writeToCSV(st);
+        //selectAll(st);
 
-
-
-        //System.out.println("**************************");
-
-//        selectAll(st);
+        writeToCSV(st);
 
 
         // Close the connection
@@ -44,9 +40,6 @@ public class Main {
 
 //        String crn = "12432";
 //        String subject = "computer programming";
-
-//        writeToCSV(st);
-
 
 
     }//end main() method
@@ -101,7 +94,7 @@ public class Main {
 
         System.out.println("Columns in the Course table:");
 
-        System.out.printf("%-10s%-10s%n", "CRN", "Course");
+        System.out.printf("%-10s%-10s%n", "Column", "Data Type");
         System.out.println("*********************");
 
         // Iterate the result set and print name, owner, and species attributes
@@ -121,22 +114,24 @@ public class Main {
 
         // Create an SQL query as as String for this statement
         // this query returns all rows and all columns from the database
-        queryString = "SELECT * FROM pet;";
+        queryString = "SELECT * FROM fall2014;";
 
         // Send a statement executing the query and saving the result set
         rs = s.executeQuery(queryString);
 
         // print headings for the output
         System.out.println(queryString);
-        System.out.printf("%-20s%-20s%-20s%n", "Pet's Name", "Owner", "Species");
-        System.out.println("*******************************************************");
+        System.out.printf("%-10s%-10s%-10s%-10s%-10s%-20s%-20s\n", "CRN","Subject", "Course","Section","Credits","Days","Time");
+        System.out.println("*****************************************************************************");
 
         // Iterate through the result set and print name, owner, and species attributes
         while (rs.next()) {
-            System.out.printf("%-20s%-20s%-20s%n", rs.getString(1), rs.getString(2), rs.getString(3));
+            System.out.printf("%-10s%-10s%-10s%-10s%-10s%-20s%-20s\n", rs.getString(1), rs.getString(2), rs.getString(3),
+
+                    rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
         }
 
-        System.out.println("*******************************************************");
+        System.out.println("*****************************************************************************");
 
     } // end selectAll()
 
