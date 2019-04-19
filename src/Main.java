@@ -26,11 +26,13 @@ public class Main {
         // Create a statement Object for this  database connection
         Statement st = conn.createStatement();
 
-        //showColumns(st);
+        showColumns(st);
 
         //selectAll(st);
 
-        writeToCSV(st);
+        //writeToCSV(st);
+
+        selectCIS(st);
 
 
         // Close the connection
@@ -151,5 +153,36 @@ public class Main {
         System.out.println("*****************************************************************************");
 
     } // end selectAll()
+
+
+
+    public static void selectCIS(Statement s) throws SQLException, ClassNotFoundException {
+
+        String queryString;     // a String to hold an SQL query
+        ResultSet rs;           // the result set from an SQL query as a table
+
+        // Create an SQL query as as String for this statement
+        // this query returns all rows and all columns from the database
+        queryString = "SELECT crn, subject, course, days FROM fall2014 where credits = '4' ;";
+
+        // Send a statement executing the query and saving the result set
+        rs = s.executeQuery(queryString);
+
+        // print headings for the output
+        System.out.println(queryString);
+        System.out.printf("%-10s%-10s%-10s%-10s%-10s%-20s%-20s\n", "CRN","Subject", "Course","Section","Credits","Days","Time");
+        System.out.println("*****************************************************************************");
+
+        // Iterate through the result set and print name, owner, and species attributes
+        while (rs.next()) {
+            System.out.printf("%-10s%-10s%-10s%-10s\n", rs.getString(1), rs.getString(2), rs.getString(3),
+
+                    rs.getString(4));
+        }
+
+        System.out.println("*****************************************************************************");
+
+    } // end selectCIS()
+
 
 }//end Main Class
