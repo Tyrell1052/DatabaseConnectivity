@@ -3,6 +3,8 @@
 * Course: CSCI 112
 * Program: DatabaseConnectivity
 *
+* This program is designed to
+*
 * */
 
 import javax.swing.*;
@@ -26,22 +28,24 @@ public class Main {
         // Create a statement Object for this  database connection
         Statement st = conn.createStatement();
 
+
         showColumns(st);
 
         //selectAll(st);
 
-        //writeToCSV(st);
+        writeToCSV(st);
 
-        selectCIS(st);
+        //selectCIS(st);
 
 
         // Close the connection
         conn.close();
-
-
     }//end main() method
 
+/*******************************************************************************************************************/
 
+/*
+* This method will be responsible for writing data from a database to a .CSV file by connecting */
     public static void writeToCSV(Statement s){
         String filePath = "Courses.csv";
 
@@ -66,7 +70,7 @@ public class Main {
             outFile.print("Requested Data from: ");
             // print headings for the output
             outFile.println(queryString);
-            outFile.printf("%-10s%-10s%-10s%-10s%-10s%-20s%-20s\n", "CRN","Subject", "Course","Section","Credits","Days","Time");
+            outFile.printf("%-10s%-10s%-10s%-10s%-10s%-20s%-20s\n", "CRN","Subject", "Course","Section","Credits","Time","Days");
             outFile.println("*****************************************************************************");
 
             // Iterate through the result set and print name, owner, and species attributes
@@ -95,9 +99,9 @@ public class Main {
 
     }//end writeToCSV
 
+/*******************************************************************************************************************/
 
-    public static void showColumns(Statement s)
-            throws SQLException, ClassNotFoundException {
+    public static void showColumns(Statement s) throws SQLException, ClassNotFoundException {
 
         String queryString;     // a String to hold an SQL query
         ResultSet rs;           // the result set from an SQL query as a table
@@ -125,6 +129,7 @@ public class Main {
 
     } // end showMetaData
 
+/*******************************************************************************************************************/
 
     public static void selectAll(Statement s) throws SQLException, ClassNotFoundException {
 
@@ -154,7 +159,7 @@ public class Main {
 
     } // end selectAll()
 
-
+/*******************************************************************************************************************/
 
     public static void selectCIS(Statement s) throws SQLException, ClassNotFoundException {
 
@@ -170,7 +175,7 @@ public class Main {
 
         // print headings for the output
         System.out.println(queryString);
-        System.out.printf("%-10s%-10s%-10s%-10s%-10s%-20s%-20s\n", "CRN","Subject", "Course","Section","Credits","Days","Time");
+        System.out.printf("%-10s%-10s%-10s%-10s\n", "CRN","Subject", "Course","Days");
         System.out.println("*****************************************************************************");
 
         // Iterate through the result set and print name, owner, and species attributes
@@ -183,6 +188,5 @@ public class Main {
         System.out.println("*****************************************************************************");
 
     } // end selectCIS()
-
 
 }//end Main Class
