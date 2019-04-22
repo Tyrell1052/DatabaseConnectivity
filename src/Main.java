@@ -3,12 +3,15 @@
 * Course: CSCI 112
 * Program: DatabaseConnectivity
 *
-* This program is designed to
+* This program is designed to provide a database connection; containing methods that allows the end
+* user to write data to a .CVS file - see the databases Metadata - show all rows & columns of the database -
+* query database for specific rows and columns.
 *
 * */
 
+/**************************************Needed imports******************************************************/
+
 import javax.swing.*;
-import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -23,40 +26,40 @@ public class Main {
         // Connect to a database by  establishing a Connection object
         Connection conn = DriverManager.getConnection("jdbc:mysql://68.178.217.12/CWHDemo", "CWHDemo", "Cwhdemo%123");
 
-        System.out.println("Database connection established.\n");
+        System.out.println("Database connection established.\n");// This will keep the end user updated on the database connection
 
-        // Create a statement Object for this  database connection
-        Statement st = conn.createStatement();
+        // Create a statement Object for the database connection
+        Statement st = conn.createStatement();// this will be passed into all needed methods as a parameter
 
+        //writeToCSV(st);
 
-        showColumns(st);
+        showMetadata(st);
 
         //selectAll(st);
 
-        writeToCSV(st);
-
-        //selectCIS(st);
+        //queryDatabase(st);
 
 
-        // Close the connection
-        conn.close();
+        conn.close();// Close the connection
+
     }//end main() method
 
 /*******************************************************************************************************************/
 
-/*
-* This method will be responsible for writing data from a database to a .CSV file by connecting */
+/*This method will be responsible for writing data from a database to a .CSV file. */
+
     public static void writeToCSV(Statement s){
-        String filePath = "Courses.csv";
+
+        String filePath = "Courses.csv";// Creating file path for saving information from database
 
         try {
 
-            FileWriter fw = new FileWriter(filePath,true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter outFile = new PrintWriter(filePath);
+            FileWriter fw = new FileWriter(filePath,true);// file writer object
+            BufferedWriter bw = new BufferedWriter(fw);//implementation of buffered object
+            PrintWriter outFile = new PrintWriter(filePath);//print writer object that will allow me to write data form the database
 
-            String queryString;     // a String to hold an SQL query
-            ResultSet rs;           // the result set from an SQL query as a table
+            String queryString; // a String to hold an SQL query
+            ResultSet rs; // the result set from an SQL query as a table
 
             // Create an SQL query as as String for this statement
             // this query returns all rows and all columns from the database
@@ -69,7 +72,7 @@ public class Main {
 
             outFile.print("Requested Data from: ");
             // print headings for the output
-            outFile.println(queryString);
+            outFile.println(queryString);// this is here to display the represented query
             outFile.printf("%-10s%-10s%-10s%-10s%-10s%-20s%-20s\n", "CRN","Subject", "Course","Section","Credits","Time","Days");
             outFile.println("*****************************************************************************");
 
@@ -88,9 +91,10 @@ public class Main {
             outFile.close();
 
             JOptionPane.showMessageDialog(null,"Saved to CVS");
+            /*this will let the end user know after the data from the database is successfully to the .CSV */
 
         }//end try
-        catch (Exception E){
+        catch (Exception E){// this will attempt to catch any exception raised by this method
 
             JOptionPane.showMessageDialog(null,"Failed to save to CSV");
 
@@ -101,7 +105,8 @@ public class Main {
 
 /*******************************************************************************************************************/
 
-    public static void showColumns(Statement s) throws SQLException, ClassNotFoundException {
+//This method will display metadata from the database
+    public static void showMetadata(Statement s) throws SQLException, ClassNotFoundException {
 
         String queryString;     // a String to hold an SQL query
         ResultSet rs;           // the result set from an SQL query as a table
@@ -115,7 +120,7 @@ public class Main {
 
         // print headings for the output
 
-        System.out.println("Columns in the Course table:");
+        System.out.println("Metadata of the Course table:");
 
         System.out.printf("%-10s%-10s%n", "Column", "Data Type");
         System.out.println("*********************");
@@ -127,10 +132,11 @@ public class Main {
 
         System.out.println("*********************\n");
 
-    } // end showMetaData
+    } // end showMetadata
 
 /*******************************************************************************************************************/
 
+// this method will display all of the data from the fall2014 database
     public static void selectAll(Statement s) throws SQLException, ClassNotFoundException {
 
         String queryString;     // a String to hold an SQL query
@@ -161,7 +167,8 @@ public class Main {
 
 /*******************************************************************************************************************/
 
-    public static void selectCIS(Statement s) throws SQLException, ClassNotFoundException {
+// this method is responsible for querying the database for specific information
+    public static void queryDatabase(Statement s) throws SQLException, ClassNotFoundException {
 
         String queryString;     // a String to hold an SQL query
         ResultSet rs;           // the result set from an SQL query as a table
@@ -187,6 +194,6 @@ public class Main {
 
         System.out.println("*****************************************************************************");
 
-    } // end selectCIS()
+    } // end queryDatabase()
 
 }//end Main Class
