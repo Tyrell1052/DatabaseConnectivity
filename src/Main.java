@@ -31,13 +31,13 @@ public class Main {
         // Create a statement Object for the database connection
         Statement st = conn.createStatement();// this will be passed into all needed methods as a parameter
 
-        //writeToCSV(st);
+        writeToCSV(st);
 
         showMetadata(st);
 
-        //selectAll(st);
+        selectAll(st);
 
-        //queryDatabase(st);
+        queryDatabase(st);
 
 
         conn.close();// Close the connection
